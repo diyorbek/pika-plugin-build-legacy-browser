@@ -1,6 +1,6 @@
 {
   "name": "pika-plugin-build-legacy-browser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A @pika/pack plugin: Adds an IIFE bundled distribution to your package for supporting legacy browsers. Built & optimized to run in all browsers.",
   "license": "MIT",
   "main": "pkg/dist-node/index.js",
