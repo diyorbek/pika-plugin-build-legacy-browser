@@ -11,6 +11,7 @@ var rollupPluginTerser = require('rollup-plugin-terser');
 var rollupBabel = _interopDefault(require('@rollup/plugin-babel'));
 var babelPluginDynamicImportSyntax = _interopDefault(require('@babel/plugin-syntax-dynamic-import'));
 var babelPluginImportMetaSyntax = _interopDefault(require('@babel/plugin-syntax-import-meta'));
+var babelPluginProposalClassProperties = _interopDefault(require('@babel/plugin-proposal-class-properties'));
 var babelPresetEnv = _interopDefault(require('@babel/preset-env'));
 var path = _interopDefault(require('path'));
 var fs = _interopDefault(require('fs'));
@@ -84,7 +85,7 @@ async function build({
           browsers: ['>0.25%', 'not op_mini all']
         }
       }]],
-      plugins: [babelPluginDynamicImportSyntax, babelPluginImportMetaSyntax]
+      plugins: [babelPluginDynamicImportSyntax, babelPluginImportMetaSyntax, babelPluginProposalClassProperties]
     }), options.minify !== false ? rollupPluginTerser.terser(typeof options.minify === 'object' ? options.minify : undefined) : {}],
     onwarn: (warning, defaultOnWarnHandler) => {
       // // Unresolved external imports are expected

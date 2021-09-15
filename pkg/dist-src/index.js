@@ -5,6 +5,7 @@ import { terser as rollupTerser } from 'rollup-plugin-terser';
 import rollupBabel from '@rollup/plugin-babel';
 import babelPluginDynamicImportSyntax from '@babel/plugin-syntax-dynamic-import';
 import babelPluginImportMetaSyntax from '@babel/plugin-syntax-import-meta';
+import babelPluginProposalClassProperties from '@babel/plugin-proposal-class-properties';
 import babelPresetEnv from '@babel/preset-env';
 import path from 'path';
 import fs from 'fs';
@@ -71,7 +72,11 @@ export async function build({ out, options, reporter, }) {
                         },
                     ],
                 ],
-                plugins: [babelPluginDynamicImportSyntax, babelPluginImportMetaSyntax],
+                plugins: [
+                    babelPluginDynamicImportSyntax,
+                    babelPluginImportMetaSyntax,
+                    babelPluginProposalClassProperties,
+                ],
             }),
             options.minify !== false
                 ? rollupTerser(typeof options.minify === 'object' ? options.minify : undefined)
