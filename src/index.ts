@@ -17,7 +17,7 @@ const DEFAULT_ENTRYPOINT = 'umd:main';
 
 export async function beforeJob({ out, options }: BuilderOptions) {
   if (!options.name) {
-    throw new MessageError('Missing name for `iife` bundle.');
+    throw new MessageError('Missing name for UMD bundle.');
   }
 
   const srcDirectory = path.join(out, 'dist-src/');
@@ -56,7 +56,7 @@ export async function build({
   options,
   reporter,
 }: BuilderOptions): Promise<void> {
-  const iifeBundleName = options.name;
+  const umdBundleName = options.name;
   const writeToUmd = path.join(out, 'dist-umd');
   const writeToUmdMin = path.join(writeToUmd, 'index.min.js');
   const result = await rollup({
@@ -119,8 +119,8 @@ export async function build({
     dir: writeToUmd,
     entryFileNames: '[name].min.js',
     chunkFileNames: '[name]-[hash].min.js',
-    format: 'iife',
-    name: iifeBundleName,
+    format: 'umd',
+    name: umdBundleName,
     exports: 'named',
     sourcemap: options.sourcemap === undefined ? true : options.sourcemap,
   });

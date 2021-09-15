@@ -1,6 +1,6 @@
 # pika-plugin-build-legacy-browser
 
-> A [@pika/pack](https://github.com/pikapkg/pack) build plugin. Adds an IIFE bundled distribution to your package for supporting legacy browsers. Built & optimized to run in all browsers. Useful for hosting on a CDN like UNPKG and/or when package dependencies aren't written to run natively on the web.
+> A [@pika/pack](https://github.com/pikapkg/pack) build plugin. Adds an UMD bundle to your package for supporting legacy browsers. Built & optimized to run in all browsers. Useful for hosting on a CDN like UNPKG and/or when package dependencies aren't written to run natively on the web.
 
 ## Install
 
@@ -39,7 +39,7 @@ yarn add pika-plugin-build-legacy-browser --dev
 - `"namedExports"` (Default: `undefined`): Ecplicitly specify unresolvable named exports (See [`rollup-plugin-commonjs`](https://github.com/rollup/rollup-plugin-commonjs/tree/v9.2.0#custom-named-exports) for more information).
 - `"minify"` (Default: `true`): Specify if bundle should be minifed using [`terser`](https://github.com/terser-js/terser) or not. Can also be [`terser` options object](https://github.com/terser-js/terser#minify-options) to further tweak minification.
 - `"entrypoint"` (Default: `"umd:main"`): Customize the package.json manifest entrypoint set by this plugin. Accepts either a string, an array of strings, or `null` to disable entrypoint.
-  - `{"entrypoint": ["unpkg", "jsdelivr"]}` will create both "unpkg" & "jsdelivr" "dist-browser/index.min.js" entrypoints.
+  - `{"entrypoint": ["unpkg", "jsdelivr"]}` will create both "unpkg" & "jsdelivr" "dist-umd/index.min.js" entrypoints.
 
 ## Result
 
