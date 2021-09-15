@@ -10,7 +10,7 @@ import path from 'path';
 import fs from 'fs';
 import { MessageError } from '@pika/types';
 import { rollup } from 'rollup';
-const DEFAULT_ENTRYPOINT = 'browser';
+const DEFAULT_ENTRYPOINT = 'umd:main';
 export async function beforeJob({ out, options }) {
     if (!options.name) {
         throw new MessageError('Missing name for `iife` bundle.');
@@ -31,14 +31,14 @@ export function manifest(manifest, { options }) {
             keys = [keys];
         }
         for (const key of keys) {
-            manifest[key] = manifest[key] || 'dist-browser/index.min.js';
+            manifest[key] = manifest[key] || 'dist-umd/index.min.js';
         }
     }
 }
 export async function build({ out, options, reporter, }) {
     const iifeBundleName = options.name;
-    const writeToBrowser = path.join(out, 'dist-browser');
-    const writeToBrowserMin = path.join(writeToBrowser, 'index.min.js');
+    const writeToUmd = path.join(out, 'dist-umd');
+    const writeToUmdMin = path.join(writeToUmd, 'index.min.js');
     const result = await rollup({
         input: path.join(out, 'dist-src/index.js'),
         plugins: [
@@ -87,7 +87,7 @@ export async function build({ out, options, reporter, }) {
         }),
     });
     await result.write({
-        dir: writeToBrowser,
+        dir: writeToUmd,
         entryFileNames: '[name].min.js',
         chunkFileNames: '[name]-[hash].min.js',
         format: 'iife',
@@ -95,5 +95,5 @@ export async function build({ out, options, reporter, }) {
         exports: 'named',
         sourcemap: options.sourcemap === undefined ? true : options.sourcemap,
     });
-    reporter.created(writeToBrowserMin);
+    reporter.created(writeToUmdMin);
 }

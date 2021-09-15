@@ -17,7 +17,7 @@ var fs = _interopDefault(require('fs'));
 var types = require('@pika/types');
 var rollup = require('rollup');
 
-const DEFAULT_ENTRYPOINT = 'browser';
+const DEFAULT_ENTRYPOINT = 'umd:main';
 async function beforeJob({
   out,
   options
@@ -49,7 +49,7 @@ function manifest(manifest, {
     }
 
     for (const key of keys) {
-      manifest[key] = manifest[key] || 'dist-browser/index.min.js';
+      manifest[key] = manifest[key] || 'dist-umd/index.min.js';
     }
   }
 }
@@ -59,8 +59,8 @@ async function build({
   reporter
 }) {
   const iifeBundleName = options.name;
-  const writeToBrowser = path.join(out, 'dist-browser');
-  const writeToBrowserMin = path.join(writeToBrowser, 'index.min.js');
+  const writeToUmd = path.join(out, 'dist-umd');
+  const writeToUmdMin = path.join(writeToUmd, 'index.min.js');
   const result = await rollup.rollup({
     input: path.join(out, 'dist-src/index.js'),
     plugins: [rollupNodeResolve({
@@ -96,7 +96,7 @@ async function build({
     }
   });
   await result.write({
-    dir: writeToBrowser,
+    dir: writeToUmd,
     entryFileNames: '[name].min.js',
     chunkFileNames: '[name]-[hash].min.js',
     format: 'iife',
@@ -104,7 +104,7 @@ async function build({
     exports: 'named',
     sourcemap: options.sourcemap === undefined ? true : options.sourcemap
   });
-  reporter.created(writeToBrowserMin);
+  reporter.created(writeToUmdMin);
 }
 
 exports.beforeJob = beforeJob;
